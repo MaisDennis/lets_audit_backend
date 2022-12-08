@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// -----------------------------------------------------------------------------
+model Comments {
+  id         String   @id
+  created_at DateTime @default(now())
+
+  message String
+  likes   Int    @default(0)
+  shares  Int    @default(0)
+
+  id_proposal String
+  proposal    Proposals @relation(fields: [id_proposal], references: [id], onDelete: Cascade)
+  id_user     String?
+  user        Users?    @relation(fields: [id_user], references: [id], onDelete: SetNull)
+
+  response Responses[]
+
+  @@map("comments")
+}
+
+// -----------------------------------------------------------------------------
+model Proposals {
+  id         String   @id
+  created_at DateTime @default(now())
+
+  message         String
+  relevance_votes Int    @default(0)
+  up_votes        Int    @default(0)
+  down_votes      Int    @default(0)
+  shares          Int    @default(0)
+
+  comment Comments[]
+
+  id_user String?
+  user    Users?  @relation(fields: [id_user], references: [id], onDelete: SetNull)
+
+  @@map("proposals")
+}
+
+// -----------------------------------------------------------------------------
+model Responses {
+  id         String   @id
+  created_at DateTime @default(now())
+
+  message String
+  likes   Int    @default(0)
+  shares  Int    @default(0)
+
+  id_comment String
+  comment    Comments @relation(fields: [id_comment], references: [id], onDelete: Cascade)
+  id_user    String?
+  user       Users?   @relation(fields: [id_user], references: [id], onDelete: SetNull)
+
+  @@map("responses")
+}
+
+// -----------------------------------------------------------------------------
+model Users {
+  id         String   @id
+  created_at DateTime @default(now())
+
+  avatar String
+  email  String @unique
+  name   String @unique
+
+  comment  Comments[]
+  proposal Proposals[]
+  reponse  Responses[]
+
+  @@map("users")
+}
+
+// model Notifications {
+
+// }
