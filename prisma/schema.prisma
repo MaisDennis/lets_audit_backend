@@ -37,6 +37,19 @@ model RelevancesOnUsers {
   @@id([id_proposal, id_user])
   @@map("_relevances_on_users")
 }
+// -----------------------------------------------------------------------------
+model TestsOnUsers {
+  created_at DateTime @default(now())
+
+  id_proposal String
+  proposal    Proposals @relation(name: "test_on_user", fields: [id_proposal], references: [id], onDelete: Cascade)
+
+  id_user   String
+  test Users  @relation(name: "test_on_user", fields: [id_user], references: [id], onDelete: Cascade)
+
+  @@id([id_proposal, id_user])
+  @@map("_tests_on_users")
+}
 
 // -----------------------------------------------------------------------------
 model UpvotesOnUsers {
@@ -47,6 +60,8 @@ model UpvotesOnUsers {
 
   id_user String
   upvote  Users  @relation(name: "upvote_on_user", fields: [id_user], references: [id], onDelete: Cascade)
+
+  thumbs_up Boolean?
 
   @@id([id_proposal, id_user])
   @@map("_upvotes_on_users")
@@ -59,11 +74,13 @@ model DownvotesOnUsers {
   id_proposal String
   proposal    Proposals @relation(name: "downvote_on_user", fields: [id_proposal], references: [id], onDelete: Cascade)
 
-  id_user  String
-  downvote Users  @relation(name: "downvote_on_user", fields: [id_user], references: [id], onDelete: Cascade)
+  id_user String
+  downvote  Users  @relation(name: "downvote_on_user", fields: [id_user], references: [id], onDelete: Cascade)
+
+  thumbs_down Boolean?
 
   @@id([id_proposal, id_user])
-  @@map("_downvotes_on_users")
+  @@map("downvotes_on_users")
 }
 
 // -----------------------------------------------------------------------------
@@ -92,6 +109,7 @@ model Proposals {
 
   message         String
   shares          Int    @default(0)
+  relevance_count Int   @default(0)
 
   comment Comments[]
 
@@ -100,7 +118,8 @@ model Proposals {
 
   relevance RelevancesOnUsers[] @relation(name: "relevance_on_user")
   upvote    UpvotesOnUsers[]    @relation(name: "upvote_on_user")
-  downvote  DownvotesOnUsers[]  @relation(name: "downvote_on_user")
+  downvote    DownvotesOnUsers[]    @relation(name: "downvote_on_user")
+  test TestsOnUsers[] @relation(name: "test_on_user")
 
   @@map("proposals")
 }
@@ -135,10 +154,12 @@ model Users {
   proposal Proposals[] @relation(name: "proposal_creator")
   response Responses[]
 
+  downvote    DownvotesOnUsers[]    @relation(name: "downvote_on_user")
   like      CommentsOnUsers[]   @relation(name: "comment_on_user")
   relevance RelevancesOnUsers[] @relation(name: "relevance_on_user")
   upvote    UpvotesOnUsers[]    @relation(name: "upvote_on_user")
-  downvote  DownvotesOnUsers[]  @relation(name: "downvote_on_user")
+  test TestsOnUsers[] @relation(name: "test_on_user")
+  
 
   @@map("users")
 }

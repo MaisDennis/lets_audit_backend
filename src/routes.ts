@@ -26,6 +26,7 @@ import { u_C as uConnectToComments_C } from './modules/users/connect_to_comments
 import { u_C as uRelevanceToProposals_C } from './modules/users/relevance_to_proposals/u_C';
 import { u_C as uUpvoteToProposals_C } from './modules/users/upvote_to_proposals/u_C';
 import { u_C as uDownvoteToProposals_C } from './modules/users/downvote_to_proposals/u_C';
+import { u_C as uTestToProposals_C } from './modules/users/test_to_proposals/u_C';
 // -----------------------------------------------------------------------------
 const routes = Router();
 // -----------------------------------------------------------------------------
@@ -55,6 +56,7 @@ const uConnectToComments = new uConnectToComments_C();
 const uRelevanceToProposals = new uRelevanceToProposals_C();
 const uUpvoteToProposals = new uUpvoteToProposals_C();
 const uDownvoteToProposals = new uDownvoteToProposals_C();
+const uTestToProposals = new uTestToProposals_C();
 // -----------------------------------------------------------------------------
 routes.post("/comments/", cComment.handle);
 routes.get("/comments/:id", lComment.handle);
@@ -82,5 +84,6 @@ routes.put("/users/connectToComments/:id", uConnectToComments.handle);
 routes.put("/users/relevanceToProposals/:id", uRelevanceToProposals.handle);
 routes.put("/users/upvoteToProposals/:id", uUpvoteToProposals.handle);
 routes.put("/users/downvoteToProposals/:id", uDownvoteToProposals.handle);
+routes.put("/users/testToProposals/:id", uTestToProposals.handle);
 // -----------------------------------------------------------------------------
 export { routes }

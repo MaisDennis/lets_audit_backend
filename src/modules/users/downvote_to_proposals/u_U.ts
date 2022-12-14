@@ -4,14 +4,15 @@ import { prisma } from "../../../database/prismaClient";
 interface IU_U {
   id: string;
   id_proposal: string;
+  thumbs_down?: boolean,
 }
 
 export class U_U {
   async execute({ 
     id, 
     id_proposal,
+    thumbs_down,
   }: IU_U) {
-    console.log(id, id_proposal)
     
     // check of user exists
     const check = await prisma.users.findFirst({
@@ -36,7 +37,8 @@ export class U_U {
                 connect: {
                   id: id_proposal,
                 }
-              }
+              },
+              thumbs_down: thumbs_down,
             }
           ]
         }

@@ -8,8 +8,8 @@ export class u_C {
     const { id } = request.params;
     const { 
       id_proposal,
-      thumbs_up,
     } = request.body;
+
     proceed()
     
     async function proceed() {
@@ -19,7 +19,6 @@ export class u_C {
         const result = await u_Use.execute({
           id,
           id_proposal,
-          thumbs_up,
         })
 
         return response.json(result)

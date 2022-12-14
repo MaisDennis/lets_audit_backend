@@ -11,7 +11,7 @@ export class U_U {
     id, 
     id_proposal,
   }: IU_U) {
-    // console.log(id, id_proposal)
+    console.log(id, id_proposal)
     
     // check of user exists
     const check = await prisma.users.findFirst({
@@ -29,7 +29,7 @@ export class U_U {
         id: id,
       },
       data: {
-        relevance: {
+        test: {
           create: [
             {
               proposal: {
@@ -41,24 +41,8 @@ export class U_U {
           ]
         }
       }
+      
     })
-    if (result) {
-      const relevanceOnUsersResult = await prisma.relevancesOnUsers.findMany({
-        where: {
-          id_proposal: id_proposal,
-        }
-      })
-
-      const relevanceCountResult = await prisma.proposals.update({
-        where: {
-          id: id_proposal,
-        },
-        data: {
-          relevance_count: relevanceOnUsersResult.length
-        }
-      })
-      console.log(relevanceCountResult)
-    }
 
     return result;
   }
