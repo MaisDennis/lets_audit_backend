@@ -8,6 +8,10 @@ export class L_U {
       where: {
         id,
       },
+      take: 5,
+      orderBy: {
+        relevance_votes: 'desc',
+      },
       include: {
         comment: true,
       }

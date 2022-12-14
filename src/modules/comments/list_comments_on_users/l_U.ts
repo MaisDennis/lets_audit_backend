@@ -2,17 +2,16 @@ import { prisma } from "../../..//database/prismaClient";
 // -----------------------------------------------------------------------------
 
 export class L_U {
-  async execute() {
+  async execute(id: string) {
     // console.log('useCase')
-    const result = await prisma.proposals.findMany({
+    const result = await prisma.comments.findMany({
+      where: {
+        id: id,
+      },
       include: {
-        comment: true,
-        upvote: true,
-        relevance: true,
+        like: true,
       }
-    }
-      
-    )
+    })
 
     return result;
   }

@@ -11,20 +11,76 @@ datasource db {
 }
 
 // -----------------------------------------------------------------------------
+model CommentsOnUsers {
+  created_at DateTime @default(now())
+
+  id_comment String
+  comment    Comments @relation(name: "comment_on_user", fields: [id_comment], references: [id], onDelete: Cascade)
+
+  id_user String
+  like    Users  @relation(name: "comment_on_user", fields: [id_user], references: [id], onDelete: Cascade)
+
+  @@id([id_comment, id_user])
+  @@map("_comments_on_users")
+}
+
+// -----------------------------------------------------------------------------
+model RelevancesOnUsers {
+  created_at DateTime @default(now())
+
+  id_proposal String
+  proposal    Proposals @relation(name: "relevance_on_user", fields: [id_proposal], references: [id], onDelete: Cascade)
+
+  id_user   String
+  relevance Users  @relation(name: "relevance_on_user", fields: [id_user], references: [id], onDelete: Cascade)
+
+  @@id([id_proposal, id_user])
+  @@map("_relevances_on_users")
+}
+
+// -----------------------------------------------------------------------------
+model UpvotesOnUsers {
+  created_at DateTime @default(now())
+
+  id_proposal String
+  proposal    Proposals @relation(name: "upvote_on_user", fields: [id_proposal], references: [id], onDelete: Cascade)
+
+  id_user String
+  upvote  Users  @relation(name: "upvote_on_user", fields: [id_user], references: [id], onDelete: Cascade)
+
+  @@id([id_proposal, id_user])
+  @@map("_upvotes_on_users")
+}
+
+// -----------------------------------------------------------------------------
+model DownvotesOnUsers {
+  created_at DateTime @default(now())
+
+  id_proposal String
+  proposal    Proposals @relation(name: "downvote_on_user", fields: [id_proposal], references: [id], onDelete: Cascade)
+
+  id_user  String
+  downvote Users  @relation(name: "downvote_on_user", fields: [id_user], references: [id], onDelete: Cascade)
+
+  @@id([id_proposal, id_user])
+  @@map("_downvotes_on_users")
+}
+
+// -----------------------------------------------------------------------------
 model Comments {
   id         String   @id
   created_at DateTime @default(now())
 
   message String
-  likes   Int    @default(0)
   shares  Int    @default(0)
 
   id_proposal String
   proposal    Proposals @relation(fields: [id_proposal], references: [id], onDelete: Cascade)
   id_user     String?
-  user        Users?    @relation(fields: [id_user], references: [id], onDelete: SetNull)
+  user        Users?    @relation(name: "comment_creator", fields: [id_user], references: [id], onDelete: SetNull)
 
   response Responses[]
+  like     CommentsOnUsers[] @relation(name: "comment_on_user")
 
   @@map("comments")
 }
@@ -35,15 +91,16 @@ model Proposals {
   created_at DateTime @default(now())
 
   message         String
-  relevance_votes Int    @default(0)
-  up_votes        Int    @default(0)
-  down_votes      Int    @default(0)
   shares          Int    @default(0)
 
   comment Comments[]
 
   id_user String?
-  user    Users?  @relation(fields: [id_user], references: [id], onDelete: SetNull)
+  user    Users?  @relation(name: "proposal_creator", fields: [id_user], references: [id], onDelete: SetNull)
+
+  relevance RelevancesOnUsers[] @relation(name: "relevance_on_user")
+  upvote    UpvotesOnUsers[]    @relation(name: "upvote_on_user")
+  downvote  DownvotesOnUsers[]  @relation(name: "downvote_on_user")
 
   @@map("proposals")
 }
@@ -70,13 +127,18 @@ model Users {
   id         String   @id
   created_at DateTime @default(now())
 
-  avatar String
+  avatar String?
   email  String @unique
   name   String @unique
 
-  comment  Comments[]
-  proposal Proposals[]
-  reponse  Responses[]
+  comment  Comments[]  @relation(name: "comment_creator")
+  proposal Proposals[] @relation(name: "proposal_creator")
+  response Responses[]
+
+  like      CommentsOnUsers[]   @relation(name: "comment_on_user")
+  relevance RelevancesOnUsers[] @relation(name: "relevance_on_user")
+  upvote    UpvotesOnUsers[]    @relation(name: "upvote_on_user")
+  downvote  DownvotesOnUsers[]  @relation(name: "downvote_on_user")
 
   @@map("users")
 }

@@ -1,20 +1,24 @@
-import { Request, Response } from "express";
+import { Request, Response } from "express"
 // -----------------------------------------------------------------------------
-import { L_U } from "./l_U";
+import { U_U } from "./u_U"
+// -----------------------------------------------------------------------------
 
-export class l_C {
+export class u_C {
   async handle(request: Request, response: Response) {
     const { id } = request.params;
-    const { take } = request.query;
-
-    const parsedTake = parseInt(take)
+    const { 
+      id_proposal,
+    } = request.body;
     proceed()
     
     async function proceed() {
       try {
 
-        const l_Use = new L_U();
-        const result = await l_Use.execute(id, parsedTake)
+        const u_Use = new U_U();
+        const result = await u_Use.execute({
+          id,
+          id_proposal,
+        })
 
         return response.json(result)
       }
