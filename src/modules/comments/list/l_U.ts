@@ -3,7 +3,7 @@ import { prisma } from "../../..//database/prismaClient";
 
 export class L_U {
   async execute(id: string, take: number) {
-    console.log(take)
+    // console.log(take)
     const result = await prisma.comments.findMany({
       where: {
         id_proposal: id,
@@ -13,7 +13,8 @@ export class L_U {
       },
       take: take,
       include: {
-        like: true,
+        like_comment: true,
+        image: true,
       }
     })
 

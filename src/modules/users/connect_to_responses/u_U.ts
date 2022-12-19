@@ -3,15 +3,15 @@ import { prisma } from "../../../database/prismaClient";
 // -----------------------------------------------------------------------------
 interface IU_U {
   id: string;
-  id_comment: string;
+  id_response: string;
 }
 
 export class U_U {
   async execute({ 
     id, 
-    id_comment,
+    id_response,
   }: IU_U) {
-    // console.log(id, id_comment)
+    // console.log(id, id_response)
     
     // check of user exists
     const check = await prisma.users.findFirst({
@@ -29,12 +29,12 @@ export class U_U {
         id,
       },
       data: {
-        like_comment: {
+        like_response: {
           create: [
             {
-              comment: {
+              response: {
                 connect: {
-                  id: id_comment,
+                  id: id_response,
                 }
               }
             }

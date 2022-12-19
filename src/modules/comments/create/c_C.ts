@@ -11,6 +11,7 @@ export class c_C {
       message,
       id_proposal,
       id_user,
+      id_image,
     } = request.body;
 
     proceed()
@@ -24,6 +25,7 @@ export class c_C {
           message,
           id_proposal,
           id_user,
+          id_image,
         })
 
         return response.json(result)

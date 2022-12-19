@@ -25,6 +25,20 @@ model CommentsOnUsers {
 }
 
 // -----------------------------------------------------------------------------
+model ResponsesOnUsers {
+  created_at DateTime @default(now())
+
+  id_response String
+  response    Responses @relation(name: "response_on_user", fields: [id_response], references: [id], onDelete: Cascade)
+
+  id_user String
+  like    Users  @relation(name: "response_on_user", fields: [id_user], references: [id], onDelete: Cascade)
+
+  @@id([id_response, id_user])
+  @@map("_responses_on_users")
+}
+
+// -----------------------------------------------------------------------------
 model RelevancesOnUsers {
   created_at DateTime @default(now())
 
@@ -37,6 +51,7 @@ model RelevancesOnUsers {
   @@id([id_proposal, id_user])
   @@map("_relevances_on_users")
 }
+
 // -----------------------------------------------------------------------------
 model TestsOnUsers {
   created_at DateTime @default(now())
@@ -44,8 +59,8 @@ model TestsOnUsers {
   id_proposal String
   proposal    Proposals @relation(name: "test_on_user", fields: [id_proposal], references: [id], onDelete: Cascade)
 
-  id_user   String
-  test Users  @relation(name: "test_on_user", fields: [id_user], references: [id], onDelete: Cascade)
+  id_user String
+  test    Users  @relation(name: "test_on_user", fields: [id_user], references: [id], onDelete: Cascade)
 
   @@id([id_proposal, id_user])
   @@map("_tests_on_users")
@@ -74,8 +89,8 @@ model DownvotesOnUsers {
   id_proposal String
   proposal    Proposals @relation(name: "downvote_on_user", fields: [id_proposal], references: [id], onDelete: Cascade)
 
-  id_user String
-  downvote  Users  @relation(name: "downvote_on_user", fields: [id_user], references: [id], onDelete: Cascade)
+  id_user  String
+  downvote Users  @relation(name: "downvote_on_user", fields: [id_user], references: [id], onDelete: Cascade)
 
   thumbs_down Boolean?
 
@@ -88,18 +103,35 @@ model Comments {
   id         String   @id
   created_at DateTime @default(now())
 
-  message String
+  message String?
   shares  Int    @default(0)
 
+  id_image    String?
+  image       Images?   @relation(fields: [id_image], references: [id], onDelete: SetNull)
   id_proposal String
   proposal    Proposals @relation(fields: [id_proposal], references: [id], onDelete: Cascade)
   id_user     String?
   user        Users?    @relation(name: "comment_creator", fields: [id_user], references: [id], onDelete: SetNull)
 
-  response Responses[]
-  like     CommentsOnUsers[] @relation(name: "comment_on_user")
+  response     Responses[]
+  like_comment CommentsOnUsers[] @relation(name: "comment_on_user")
 
   @@map("comments")
+}
+
+// -----------------------------------------------------------------------------
+model Images {
+  id         String   @id
+  created_at DateTime @default(now())
+
+  file_url String
+
+  id_user String?
+  user    Users?  @relation(fields: [id_user], references: [id], onDelete: SetNull)
+
+  comment Comments[]
+
+    @@map("images")
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +141,7 @@ model Proposals {
 
   message         String
   shares          Int    @default(0)
-  relevance_count Int   @default(0)
+  relevance_count Int    @default(0)
 
   comment Comments[]
 
@@ -118,8 +150,8 @@ model Proposals {
 
   relevance RelevancesOnUsers[] @relation(name: "relevance_on_user")
   upvote    UpvotesOnUsers[]    @relation(name: "upvote_on_user")
-  downvote    DownvotesOnUsers[]    @relation(name: "downvote_on_user")
-  test TestsOnUsers[] @relation(name: "test_on_user")
+  downvote  DownvotesOnUsers[]  @relation(name: "downvote_on_user")
+  test      TestsOnUsers[]      @relation(name: "test_on_user")
 
   @@map("proposals")
 }
@@ -129,7 +161,7 @@ model Responses {
   id         String   @id
   created_at DateTime @default(now())
 
-  message String
+  message String?
   likes   Int    @default(0)
   shares  Int    @default(0)
 
@@ -137,6 +169,8 @@ model Responses {
   comment    Comments @relation(fields: [id_comment], references: [id], onDelete: Cascade)
   id_user    String?
   user       Users?   @relation(fields: [id_user], references: [id], onDelete: SetNull)
+
+  like_response ResponsesOnUsers[] @relation(name: "response_on_user")
 
   @@map("responses")
 }
@@ -147,19 +181,20 @@ model Users {
   created_at DateTime @default(now())
 
   avatar String?
-  email  String @unique
-  name   String @unique
+  email  String  @unique
+  name   String  @unique
 
   comment  Comments[]  @relation(name: "comment_creator")
+  image    Images[]
   proposal Proposals[] @relation(name: "proposal_creator")
   response Responses[]
 
-  downvote    DownvotesOnUsers[]    @relation(name: "downvote_on_user")
-  like      CommentsOnUsers[]   @relation(name: "comment_on_user")
-  relevance RelevancesOnUsers[] @relation(name: "relevance_on_user")
-  upvote    UpvotesOnUsers[]    @relation(name: "upvote_on_user")
-  test TestsOnUsers[] @relation(name: "test_on_user")
-  
+  downvote      DownvotesOnUsers[]  @relation(name: "downvote_on_user")
+  like_comment  CommentsOnUsers[]   @relation(name: "comment_on_user")
+  like_response ResponsesOnUsers[]  @relation(name: "response_on_user")
+  relevance     RelevancesOnUsers[] @relation(name: "relevance_on_user")
+  upvote        UpvotesOnUsers[]    @relation(name: "upvote_on_user")
+  test          TestsOnUsers[]      @relation(name: "test_on_user")
 
   @@map("users")
 }

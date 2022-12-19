@@ -4,9 +4,7 @@ import { L_U } from "./l_U";
 
 export class l_C {
   async handle(request: Request, response: Response) {
-    const { id } = request.params;
-    const { take } = request.query;
-    const parsedTake = parseInt(take)
+    const { key } = request.params;
 
     proceed()
     
@@ -14,9 +12,12 @@ export class l_C {
       try {
 
         const l_Use = new L_U();
-        const result = await l_Use.execute(id, parsedTake)
+        const result = await l_Use.execute(key)
 
-        return response.json(result)
+        // return response.json(result)
+        result.pipe(response)
+        // console.log(image)
+        // response.send(image)
       }
       catch (err:any) {
         return response.status(400).json(err.message)

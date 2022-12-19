@@ -5,25 +5,21 @@ import { C_U } from "./c_U";
 
 export class c_C {
   async handle(request: Request, response: Response) {
-    const id = "respo." + uuid();
+    const id_image = "image." + uuid();
+    const file = request.file
 
-    const { 
-      message,
-      id_comment,
-      id_user,
-    } = request.body;
-
+    const { id_user } = request.query;
+    
     proceed()
     
     async function proceed() {
       try {
-
+        
         const c_Use = new C_U();
         const result = await c_Use.execute({
-          id,
-          message,
-          id_comment,
-          id_user,
+          id: id_image,
+          file,
+          id_user: id_user,
         })
 
         return response.json(result)
