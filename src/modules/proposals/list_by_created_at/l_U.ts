@@ -10,10 +10,13 @@ export class L_U {
       },
       take: 5,
       orderBy: {
-        relevance_votes: 'desc',
+        created_at: 'desc',
       },
       include: {
         comment: true,
+        upvote: true,
+        relevance: true,
+        test: true,
       }
     })
 

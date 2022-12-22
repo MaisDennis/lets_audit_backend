@@ -16,7 +16,7 @@ import { c_C as cProposal_C } from './modules/proposals/create/c_C';
 import { d_C as dProposal_C } from './modules/proposals/delete/d_C';
 import { l_C as lProposal_C } from './modules/proposals/list/l_C';
 import { u_C as uProposal_C } from './modules/proposals/update/u_C';
-import { l_C as lWithCommentsProposal_C } from './modules/proposals/list_with_comments/l_C';
+import { l_C as lProposalByCreatedAt_C } from './modules/proposals/list_by_created_at/l_C';
 // -----------------------------------------------------------------------------
 import { c_C as cResponse_C } from './modules/responses/create/c_C';
 import { d_C as dResponse_C } from './modules/responses/delete/d_C';
@@ -51,7 +51,7 @@ const cProposal = new cProposal_C();
 const lProposal = new lProposal_C();
 const uProposal = new uProposal_C();
 const dProposal = new dProposal_C();
-const lWithCommentsProposal = new lWithCommentsProposal_C();
+const lProposalByCreatedAt = new lProposalByCreatedAt_C();
 // -----------------------------------------------------------------------------
 const cResponse = new cResponse_C();
 const lResponse = new lResponse_C();
@@ -84,7 +84,7 @@ routes.post("/proposals/", cProposal.handle);
 routes.get("/proposals/", lProposal.handle);
 routes.put("/proposals/:id", uProposal.handle);
 routes.delete("/proposals/:id", dProposal.handle);
-routes.get("/proposals/comments/:id", lWithCommentsProposal.handle);
+routes.get("/proposals/by_created_at/", lProposalByCreatedAt.handle);
 // -----------------------------------------------------------------------------
 routes.post("/responses/", cResponse.handle);
 routes.get("/responses/:id", lResponse.handle);

@@ -15,6 +15,7 @@ export class L_U {
       include: {
         like_comment: true,
         image: true,
+        response: true,
       }
     })
 

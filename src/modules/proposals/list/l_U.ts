@@ -8,6 +8,7 @@ export class L_U {
       orderBy: {
         relevance_count: 'desc',
       },
+      take: 10,
       include: {
         comment: true,
         upvote: true,
