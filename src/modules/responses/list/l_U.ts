@@ -14,6 +14,7 @@ export class L_U {
       take: take,
       include: {
         like_response: true,
+        image: true,
       }
     })
 

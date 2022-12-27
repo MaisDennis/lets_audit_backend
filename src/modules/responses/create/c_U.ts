@@ -4,6 +4,7 @@ interface IC_U {
   id: string;
   message: string;
   id_comment: string;
+  id_image: string;
   id_user: string;
 }
 
@@ -12,6 +13,7 @@ export class C_U {
     id, 
     message, 
     id_comment,
+    id_image,
     id_user,
   }: IC_U) {
     
@@ -19,9 +21,9 @@ export class C_U {
       data: {
         id, 
         message,
-        id_comment, 
+        id_comment,
+        id_image,
         id_user,
-        
       }
     })
 

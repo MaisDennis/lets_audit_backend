@@ -6,10 +6,27 @@ import { C_U } from "./c_U";
 export class c_C {
   async handle(request: Request, response: Response) {
     const id_image = "image." + uuid();
-    const file = request.file
+    const file = request.file;
 
-    const { id_user } = request.query;
+    // const { id_user, type, url } = request.query;
+
     
+
+    // console.log(request.body.params.id_user)
+    // console.log(file)
+    let id_user, type, url
+    if (file) {
+      id_user = request.query.id_user
+      type = request.query.type
+    }
+    else {
+      id_user = request.body.params.id_user
+      type = request.body.params.type
+      url = request.body.params.url
+    }
+
+    console.log(id_user, type, url)
+
     proceed()
     
     async function proceed() {
@@ -19,6 +36,8 @@ export class c_C {
         const result = await c_Use.execute({
           id: id_image,
           file,
+          type,
+          url,
           id_user: id_user,
         })
 

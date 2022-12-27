@@ -10,6 +10,7 @@ export class c_C {
     const { 
       message,
       id_comment,
+      id_image,
       id_user,
     } = request.body;
 
@@ -23,6 +24,7 @@ export class c_C {
           id,
           message,
           id_comment,
+          id_image,
           id_user,
         })
 

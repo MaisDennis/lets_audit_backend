@@ -104,7 +104,7 @@ model Comments {
   created_at DateTime @default(now())
 
   message String?
-  shares  Int    @default(0)
+  shares  Int     @default(0)
 
   id_image    String?
   image       Images?   @relation(fields: [id_image], references: [id], onDelete: SetNull)
@@ -125,13 +125,15 @@ model Images {
   created_at DateTime @default(now())
 
   file_url String
+  type     ImageType
 
   id_user String?
   user    Users?  @relation(fields: [id_user], references: [id], onDelete: SetNull)
 
-  comment Comments[]
+  comment  Comments[]
+  response Responses[]
 
-    @@map("images")
+  @@map("images")
 }
 
 // -----------------------------------------------------------------------------
@@ -162,11 +164,13 @@ model Responses {
   created_at DateTime @default(now())
 
   message String?
-  likes   Int    @default(0)
-  shares  Int    @default(0)
+  likes   Int     @default(0)
+  shares  Int     @default(0)
 
   id_comment String
   comment    Comments @relation(fields: [id_comment], references: [id], onDelete: Cascade)
+  id_image   String?
+  image      Images?  @relation(fields: [id_image], references: [id], onDelete: SetNull)
   id_user    String?
   user       Users?   @relation(fields: [id_user], references: [id], onDelete: SetNull)
 
@@ -202,3 +206,10 @@ model Users {
 // model Notifications {
 
 // }
+
+// -----------------------------------------------------------------------------
+
+enum ImageType {
+  FILE
+  URL
+}

@@ -1,31 +1,24 @@
-import { Request, Response } from "express";
-import { v4 as uuid } from 'uuid';
+import { Request, Response } from "express"
 // -----------------------------------------------------------------------------
-import { C_U } from "./c_U";
+import { D_U } from "./d_U"
+// -----------------------------------------------------------------------------
 
-export class c_C {
+export class d_C {
   async handle(request: Request, response: Response) {
-    const id = "comme." + uuid();
-
+    const { id } = request.params;
     const { 
-      message,
-      id_image,
       id_proposal,
-      id_user,
-    } = request.body;
+    } = request.query;
 
     proceed()
     
     async function proceed() {
       try {
 
-        const c_Use = new C_U();
-        const result = await c_Use.execute({
+        const d_Use = new D_U();
+        const result = await d_Use.execute({
           id,
-          message,
-          id_image,
           id_proposal,
-          id_user,
         })
 
         return response.json(result)
