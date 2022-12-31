@@ -14,6 +14,7 @@ export class L_U {
         upvote: true,
         relevance: true,
         test: true,
+        user: true,
       }
     }
       

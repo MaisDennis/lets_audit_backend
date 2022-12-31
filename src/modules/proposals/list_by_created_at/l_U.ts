@@ -2,21 +2,19 @@ import { prisma } from "../../..//database/prismaClient";
 // -----------------------------------------------------------------------------
 
 export class L_U {
-  async execute(id: string) {
+  async execute() {
     // console.log('useCase')
     const result = await prisma.proposals.findMany({
-      where: {
-        id,
-      },
-      take: 5,
       orderBy: {
         created_at: 'desc',
       },
+      take: 10,
       include: {
         comment: true,
         upvote: true,
         relevance: true,
         test: true,
+        user: true,
       }
     })
 
