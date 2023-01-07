@@ -36,7 +36,6 @@ import { d_C as dDisconnectToResponses_C } from './modules/users/disconnect_to_r
 import { u_C as uRelevanceToProposals_C } from './modules/users/relevance_to_proposals/u_C';
 import { u_C as uUpvoteToProposals_C } from './modules/users/upvote_to_proposals/u_C';
 import { d_C as dUpvoteToProposal_C } from './modules/users/upvote_to_proposals_disconnect/d_C'
-import { u_C as uDownvoteToProposals_C } from './modules/users/downvote_to_proposals/u_C';
 import { u_C as uTestToProposals_C } from './modules/users/test_to_proposals/u_C';
 import { d_C as dTestToProposals_C } from './modules/users/test_to_proposals_disconnect/d_C';
 // -----------------------------------------------------------------------------
@@ -76,7 +75,6 @@ const dDisconnectToResponses = new dDisconnectToResponses_C();
 const uRelevanceToProposals = new uRelevanceToProposals_C();
 const uUpvoteToProposals = new uUpvoteToProposals_C();
 const dUpvoteToProposals = new dUpvoteToProposal_C();
-const uDownvoteToProposals = new uDownvoteToProposals_C();
 const uTestToProposals = new uTestToProposals_C();
 const dTestToProposals = new dTestToProposals_C();
 // -----------------------------------------------------------------------------

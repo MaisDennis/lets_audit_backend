@@ -10,7 +10,7 @@ export class D_U {
   async execute({ 
     id,
     id_proposal
-  }: IU_U) {
+  }: ID_U) {
     
     // check of user exists
     const check = await prisma.upvotesOnUsers.findFirst({

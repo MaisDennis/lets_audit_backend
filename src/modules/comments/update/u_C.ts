@@ -8,7 +8,6 @@ export class u_C {
     const { id } = request.params;
     const {
       message,
-      likes,
       shares,
     } = request.body;
 
@@ -21,7 +20,6 @@ export class u_C {
         const result = await u_Use.execute({
           id,
           message,
-          likes,
           shares,
         })
 

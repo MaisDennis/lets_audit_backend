@@ -23,7 +23,7 @@ export class C_U {
     id_user,
   }: IC_U) {
 
-    let file_url
+    let file_url: any
 
     // upload file (image)
     if (type === 'FILE') {

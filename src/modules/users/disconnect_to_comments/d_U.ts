@@ -11,7 +11,6 @@ export class D_U {
     id, 
     id_comment,
   }: ID_U) {
-    // console.log(id, id_comment)
     
     // check of user exists
     const check = await prisma.commentsOnUsers.findFirst({

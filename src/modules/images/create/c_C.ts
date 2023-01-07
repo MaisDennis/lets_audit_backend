@@ -8,13 +8,7 @@ export class c_C {
     const id_image = "image." + uuid();
     const file = request.file;
 
-    // const { id_user, type, url } = request.query;
-
-    
-
-    // console.log(request.body.params.id_user)
-    // console.log(file)
-    let id_user, type, url
+    let id_user: any, type: any, url: any
     if (file) {
       id_user = request.query.id_user
       type = request.query.type
@@ -24,8 +18,6 @@ export class c_C {
       type = request.body.params.type
       url = request.body.params.url
     }
-
-    console.log(id_user, type, url)
 
     proceed()
     

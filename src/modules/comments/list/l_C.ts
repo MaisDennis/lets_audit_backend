@@ -6,7 +6,7 @@ export class l_C {
   async handle(request: Request, response: Response) {
     const { id } = request.params;
     const { take } = request.query;
-    const parsedTake = parseInt(take)
+    const parsedTake = parseInt(take as string)
 
     proceed()
     
